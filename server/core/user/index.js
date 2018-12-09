@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const bcrypt = require('bcrypt-nodejs');
 const flatten = require('flat');
 const User = require('./model');
 const APIError = require('../../helpers/APIError');
@@ -41,6 +42,9 @@ module.exports.getUserById = async function getUserById(userId) {
 
 module.exports.updateUserById = async function updateUserById(userId, userData) {
   try {
+    if (userData.password) {
+      userData.password = bcrypt.hashSync(userData.password, bcrypt.genSaltSync(10));
+    }
     return User.findByIdAndUpdate(userId, flatten(userData), { new: true });
   } catch (err) {
     if (err.code === 11000) {
