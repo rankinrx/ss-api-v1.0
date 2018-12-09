@@ -16,7 +16,7 @@ module.exports.addAthleteForOrganizationSchema = {
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
     passcode: Joi.number().required(),
-    sport: Joi.string().required().valid(['Football', 'Baseball', 'Wrestling']),
+    sport: Joi.array().items(Joi.string().valid(['Football', 'Baseball', 'Wrestling'])).required(),
   },
   params: {},
   query: {
@@ -31,7 +31,7 @@ module.exports.updateAthleteSchema = {
     lastName: Joi.string(),
     gender: Joi.string().valid('Male', 'Female'),
     birthday: Joi.date(),
-    sport: Joi.string().valid(['Football', 'Baseball', 'Wrestling']),
+    sport: Joi.array().items(Joi.string().valid(['Football', 'Baseball', 'Wrestling'])).required(),
     showWeight: Joi.boolean(),
     highRisk: Joi.boolean(),
     passcode: Joi.number(),
