@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const flatten = require('flat');
 const User = require('./model');
 const APIError = require('../../helpers/APIError');
 
@@ -40,7 +41,7 @@ module.exports.getUserById = async function getUserById(userId) {
 
 module.exports.updateUserById = async function updateUserById(userId, userData) {
   try {
-    return User.findByIdAndUpdate(userId, userData);
+    return User.findByIdAndUpdate(userId, flatten(userData), { new: true });
   } catch (err) {
     if (err.code === 11000) {
       throw new APIError('Email already associated with an account.', httpStatus.CONFLICT, true);
