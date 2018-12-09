@@ -26,8 +26,8 @@ module.exports.deleteNotificationById = async function deleteNotificationById(no
 };
 
 
-module.exports.deleteNotificationByAthleteIds = async function deleteNotificationByAthleteIds(athleteId) {
-  return Notification.remove({ athlete: athleteId });
+module.exports.deleteNotificationByAthleteIds = async function deleteNotificationByAthleteIds(athleteIds) {
+  return Notification.remove({ athlete: { $in: athleteIds } });
 };
 
 

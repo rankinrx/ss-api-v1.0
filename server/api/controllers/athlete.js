@@ -36,10 +36,11 @@ module.exports.updateAthleteRoute = async function updateAthleteRoute(req, res, 
 
 module.exports.deleteAthletesByOrganizationRoute = async function deleteAthletesByOrganizationRoute(req, res, next) {
   try {
-    const athletes = await Athlete.deleteAthletesByOrganization(req.query.currentOrg);
+    const athletes = await Athlete.findAthletesByOrganization(req.query.currentOrg);
     const athleteIds = athletes.map(athlete => athlete._id);
     await Weight.deleteWeightByAthleteIds(athleteIds);
     await Notification.deleteNotificationByAthleteIds(athleteIds);
+    await Athlete.deleteAthletesByOrganization(req.query.currentOrg);
     return res.json({ data: athletes });
   } catch (error) {
     return next(error);
